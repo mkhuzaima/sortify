@@ -10,7 +10,39 @@ interface SortingVisualizationProps {
 
 const SortingVisualization = ({ steps, title, stepsPerSecond = 2 }: SortingVisualizationProps) => {
   const frame = useCurrentFrame();
-  const currentStepIndex = Math.min(Math.floor(frame / (60 / stepsPerSecond)), steps.length - 1);
+  // Calculate pause frames after swap operations
+  const FRAMES_PER_STEP = 60 / stepsPerSecond;
+  const PAUSE_FRAMES_AFTER_SWAP = Math.floor(FRAMES_PER_STEP * 0.3); // 30% of a step duration
+  
+  // Calculate the current step index accounting for pauses after swaps
+  const calculateStepIndex = (frameCount: number) => {
+    let remainingFrames = frameCount;
+    let stepIndex = 0;
+    
+    while (stepIndex < steps.length && remainingFrames >= 0) {
+      // Check if previous step was a swap that requires a pause
+      const isAfterSwap = stepIndex > 0 && steps[stepIndex - 1].type === 'swap';
+      
+      // If we're in a pause period after a swap, return the previous step
+      if (isAfterSwap && remainingFrames < PAUSE_FRAMES_AFTER_SWAP) {
+        return stepIndex - 1;
+      }
+      
+      // Consume frames for this step (plus potential pause)
+      const framesForThisStep = FRAMES_PER_STEP + (isAfterSwap ? PAUSE_FRAMES_AFTER_SWAP : 0);
+      
+      if (remainingFrames < framesForThisStep) {
+        return stepIndex;
+      }
+      
+      remainingFrames -= framesForThisStep;
+      stepIndex++;
+    }
+    
+    return Math.min(stepIndex, steps.length - 1);
+  };
+  
+  const currentStepIndex = calculateStepIndex(frame);
   const currentStep = steps[currentStepIndex];
   
   const { type, indices, arrayState } = currentStep;
@@ -25,32 +57,47 @@ const SortingVisualization = ({ steps, title, stepsPerSecond = 2 }: SortingVisua
   const compareIndices = type === 'compare' ? indices : [];
   const swapIndices = type === 'swap' ? indices : [];
   
-  // Extract loop variables i and j from the step index patterns
-  // This is a heuristic approach based on common sorting algorithm patterns
-  const getLoopVariables = () => {
-    if (indices.length !== 2) return {};
+  // Calculate progress within the current step for smooth transitions
+  const getStepProgress = () => {
+    let consumedFrames = 0;
     
-    // For bubble sort and similar algorithms
-    if (type === 'compare' && indices[0] + 1 === indices[1]) {
-      return {
-        i: Math.floor(indices[0] / (arrayState.length - 1) * (arrayState.length - 1)),
-        j: indices[0]
-      };
+    // Calculate frames consumed by previous steps
+    for (let i = 0; i < currentStepIndex; i++) {
+      const prevStepIsSwap = i > 0 && steps[i - 1].type === 'swap';
+      consumedFrames += FRAMES_PER_STEP + (prevStepIsSwap ? PAUSE_FRAMES_AFTER_SWAP : 0);
     }
     
-    // For selection sort and similar algorithms
-    if (type === 'compare') {
-      return {
-        i: indices[0],
-        j: indices[1]
-      };
+    // Calculate progress within current step (0 to 1)
+    const frameInCurrentStep = frame - consumedFrames;
+    const currentStepIsAfterSwap = currentStepIndex > 0 && steps[currentStepIndex - 1].type === 'swap';
+    const totalFramesInCurrentStep = FRAMES_PER_STEP + (currentStepIsAfterSwap ? PAUSE_FRAMES_AFTER_SWAP : 0);
+    
+    return Math.min(frameInCurrentStep / totalFramesInCurrentStep, 1);
+  };
+  
+  // Check if we're in a pause period after a swap
+  const isInPausePeriod = () => {
+    if (currentStepIndex === 0) return false;
+    
+    const prevStepIsSwap = steps[currentStepIndex - 1].type === 'swap';
+    if (!prevStepIsSwap) return false;
+    
+    let consumedFrames = 0;
+    for (let i = 0; i < currentStepIndex; i++) {
+      const stepIsAfterSwap = i > 0 && steps[i - 1].type === 'swap';
+      consumedFrames += FRAMES_PER_STEP + (stepIsAfterSwap ? PAUSE_FRAMES_AFTER_SWAP : 0);
     }
     
-    return {};
+    return frame - consumedFrames < PAUSE_FRAMES_AFTER_SWAP;
   };
 
   // Format the action text based on the current step type
   const getActionText = () => {
+    // If we're in a pause period after a swap, show a message indicating we're pausing
+    if (isInPausePeriod()) {
+      return `✓ Completed swap of elements ${indices.map(i => arrayState[i]).join(' and ')}`;
+    }
+    
     switch(type) {
       case 'compare':
         return `🔍 Comparing elements ${indices.map(i => arrayState[i]).join(' and ')}`;
@@ -74,9 +121,8 @@ const SortingVisualization = ({ steps, title, stepsPerSecond = 2 }: SortingVisua
         <ArrayVisualization 
           array={arrayState} 
           compareIndices={compareIndices}
-          swapIndices={swapIndices}
+          swapIndices={type === 'swap' && !isInPausePeriod() ? swapIndices : []}
           sortedIndices={sortedIndices}
-          loopVariables={getLoopVariables()}
         />
         
         <div className="flex items-center justify-between w-full mt-4 p-4 bg-white rounded-lg border border-gray-200 shadow-md">
@@ -95,7 +141,8 @@ const SortingVisualization = ({ steps, title, stepsPerSecond = 2 }: SortingVisua
           
           <div>
             <span className={`font-semibold px-3 py-1 rounded-full border
-              ${type === 'compare' ? 'bg-yellow-100 text-yellow-800 border-yellow-300' : 
+              ${isInPausePeriod() ? 'bg-blue-100 text-blue-800 border-blue-300' :
+              type === 'compare' ? 'bg-yellow-100 text-yellow-800 border-yellow-300' : 
               type === 'swap' ? 'bg-red-100 text-red-800 border-red-300' : 
               'bg-green-100 text-green-800 border-green-300'}`}>
               {getActionText()}

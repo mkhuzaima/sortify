@@ -26,9 +26,24 @@ function App() {
     }, 100);
   };
 
-  // Calculate video duration based on steps
+  // Calculate video duration based on steps with pauses after swaps
   const stepsPerSecond = 2;
-  const durationInFrames = steps ? Math.max(steps.length * (60 / stepsPerSecond), 60) : 60;
+  const framesPerStep = 60 / stepsPerSecond;
+  const calculateDuration = () => {
+    if (!steps) return 60; // Default minimum
+    
+    // Count how many swap operations there are (which will need pauses)
+    const swapCount = steps.filter(step => step.type === 'swap').length;
+    
+    // Calculate total frames needed (regular steps + pause frames after swaps)
+    const pauseFramesAfterSwap = Math.floor(framesPerStep * 0.3); // 30% of a step duration
+    return Math.max(
+      (steps.length * framesPerStep) + (swapCount * pauseFramesAfterSwap),
+      60 // Ensure a minimum length
+    );
+  };
+  
+  const durationInFrames = calculateDuration();
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-gray-100 flex flex-col items-center justify-center p-4">
@@ -118,7 +133,8 @@ function App() {
                     Total steps: {steps.length} | Animation speed: {stepsPerSecond} steps/second
                   </p>
                   <p className="text-gray-600 mt-1">
-                    Each step represents a key operation in the algorithm: comparing, swapping, or marking as sorted.
+                    Each step represents a key operation in the algorithm: comparing, swapping, or marking as sorted. 
+                    Pauses are added after swaps for better comprehension.
                   </p>
                 </div>
               </div>
