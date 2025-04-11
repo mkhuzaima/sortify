@@ -1,54 +1,105 @@
-# React + TypeScript + Vite
+# Sortify 🔄
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Sortify is an educational web application that helps users visualize and understand common sorting algorithms through interactive animations and video generation.
 
-Currently, two official plugins are available:
+## 🎯 Overview
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Sortify takes a list of numbers and a selected sorting algorithm, then generates an animated visualization that shows the sorting process step by step. This makes it easier to understand how different sorting algorithms work and compare their efficiencies.
 
-## Expanding the ESLint configuration
+## ✨ Features
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **Interactive Input**: Enter your own array of integers to sort
+- **Multiple Algorithms**: Choose from different sorting algorithms:
+  - Bubble Sort
+  - Selection Sort
+- **Real-time Visualization**: Watch the sorting process as it happens
+- **Educational Context**: Learn about sorting algorithm complexities and behaviors
+- **Remotion Integration**: Generate high-quality videos of the sorting process
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## 📋 Requirements
+
+- Node.js 14+
+- npm or yarn package manager
+
+## 🚀 Getting Started
+
+### Installation
+
+1. Clone the repository:
+   ```
+   git clone https://github.com/yourusername/sortify.git
+   cd sortify
+   ```
+
+2. Install dependencies:
+   ```
+   npm install
+   # or
+   yarn
+   ```
+
+3. Start the development server:
+   ```
+   npm run dev
+   # or
+   yarn dev
+   ```
+
+4. Open your browser and navigate to `http://localhost:5173`
+
+## 💻 Usage
+
+1. Enter a comma-separated list of integers in the input field (e.g., `5, 2, 9, 1, 7`)
+2. Select a sorting algorithm from the dropdown menu
+3. Click "Generate Video" to start the visualization
+4. Watch the animation and learn how the selected algorithm sorts the data
+
+## 🧠 How It Works
+
+Sortify uses a step-by-step approach to track and visualize sorting algorithms:
+
+1. **Step Tracking**: Each sorting algorithm implementation tracks every comparison, swap, and "mark as sorted" operation
+2. **Visual Representation**: Elements are represented as bars with heights proportional to their values
+3. **Color Coding**:
+   - Blue: Regular element
+   - Yellow: Elements being compared
+   - Red: Elements being swapped
+   - Green: Elements that are in their final sorted position
+
+## 🛠️ Technologies Used
+
+- **React**: Front-end library for building the user interface
+- **TypeScript**: For type-safe code and better developer experience
+- **Tailwind CSS**: For styling the application
+- **Remotion**: For creating video visualizations
+- **Vite**: For fast development and optimized builds
+
+## 🧩 Project Structure
+
+```
+sortify/
+├── src/
+│   ├── components/       # Input UI, Dropdown, Button
+│   ├── algorithms/       # Sorting functions with step tracking
+│   ├── remotion/         # Remotion video composition
+│   ├── utils/            # Helpers: parse input, validate array
+│   └── App.tsx           # Main page layout
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 🌟 Future Enhancements
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- Add more sorting algorithms (Quick Sort, Merge Sort, etc.)
+- Allow custom animation speed control
+- Implement algorithm comparison mode
+- Add step-by-step explanation of what's happening
+- Enable social sharing of generated visualizations
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+## 📄 License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## 🙏 Acknowledgements
+
+- Sorting algorithms educational resources
+- React and Remotion documentation
+- The open-source community for inspiration
