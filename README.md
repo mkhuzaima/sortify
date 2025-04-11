@@ -1,77 +1,48 @@
 # Sortify 🔄
 
-Sortify is an educational web application that helps users visualize and understand common sorting algorithms through interactive animations and video generation.
+Sortify is an educational web application that helps users visualize and understand common sorting algorithms through interactive animations and step-by-step visualization.
+
+![Sortify Banner](https://via.placeholder.com/800x400?text=Sortify+-+Sorting+Algorithm+Visualizer)
 
 ## 🎯 Overview
 
 Sortify takes a list of numbers and a selected sorting algorithm, then generates an animated visualization that shows the sorting process step by step. This makes it easier to understand how different sorting algorithms work and compare their efficiencies.
 
-## ✨ Features
+## ✨ Features Implemented
 
-- **Interactive Input**: Enter your own array of integers to sort
-- **Multiple Algorithms**: Choose from different sorting algorithms:
+- **Interactive Input**
+
+  - Enter your own array of integers to sort
+  - Support for different input formats and validation
+  - Quick-access example datasets
+
+- **Multiple Sorting Algorithms**
+
   - Bubble Sort
   - Selection Sort
-- **Real-time Visualization**: Watch the sorting process as it happens
-- **Educational Context**: Learn about sorting algorithm complexities and behaviors
-- **Remotion Integration**: Generate high-quality videos of the sorting process
 
-## 📋 Requirements
+- **Real-time Visualization**
 
-- Node.js 14+
-- npm or yarn package manager
+  - Color-coded elements (comparing, swapping, sorted)
+  - Animated transitions between steps
+  - Pause after swap operations for better comprehension
 
-## 🚀 Getting Started
+- **Educational Elements**
 
-### Installation
+  - Algorithm complexity information
+  - Step-by-step breakdown of operations
+  - Clear visual indicators for each operation type
 
-1. Clone the repository:
-   ```
-   git clone https://github.com/yourusername/sortify.git
-   cd sortify
-   ```
-
-2. Install dependencies:
-   ```
-   npm install
-   # or
-   yarn
-   ```
-
-3. Start the development server:
-   ```
-   npm run dev
-   # or
-   yarn dev
-   ```
-
-4. Open your browser and navigate to `http://localhost:5173`
-
-## 💻 Usage
-
-1. Enter a comma-separated list of integers in the input field (e.g., `5, 2, 9, 1, 7`)
-2. Select a sorting algorithm from the dropdown menu
-3. Click "Generate Video" to start the visualization
-4. Watch the animation and learn how the selected algorithm sorts the data
-
-## 🧠 How It Works
-
-Sortify uses a step-by-step approach to track and visualize sorting algorithms:
-
-1. **Step Tracking**: Each sorting algorithm implementation tracks every comparison, swap, and "mark as sorted" operation
-2. **Visual Representation**: Elements are represented as bars with heights proportional to their values
-3. **Color Coding**:
-   - Blue: Regular element
-   - Yellow: Elements being compared
-   - Red: Elements being swapped
-   - Green: Elements that are in their final sorted position
+- **Customization Options**
+  - Adjustable animation speed (from very slow to very fast)
+  - Descriptive algorithm information
 
 ## 🛠️ Technologies Used
 
 - **React**: Front-end library for building the user interface
 - **TypeScript**: For type-safe code and better developer experience
 - **Tailwind CSS**: For styling the application
-- **Remotion**: For creating video visualizations
+- **Remotion**: For creating interactive visualizations
 - **Vite**: For fast development and optimized builds
 
 ## 🧩 Project Structure
@@ -79,27 +50,92 @@ Sortify uses a step-by-step approach to track and visualize sorting algorithms:
 ```
 sortify/
 ├── src/
-│   ├── components/       # Input UI, Dropdown, Button
-│   ├── algorithms/       # Sorting functions with step tracking
-│   ├── remotion/         # Remotion video composition
-│   ├── utils/            # Helpers: parse input, validate array
-│   └── App.tsx           # Main page layout
+│   ├── components/       # UI Components (InputForm, ArrayVisualization)
+│   ├── algorithms/       # Sorting algorithm implementations with step tracking
+│   ├── remotion/         # Remotion visualization components
+│   ├── utils/            # Helper functions (array parsing, validation)
+│   └── App.tsx           # Main application component
 ```
 
-## 🌟 Future Enhancements
+## 🔍 How It Works
 
-- Add more sorting algorithms (Quick Sort, Merge Sort, etc.)
-- Allow custom animation speed control
-- Implement algorithm comparison mode
-- Add step-by-step explanation of what's happening
-- Enable social sharing of generated visualizations
+1. **Input Handling**: Users enter comma-separated integers and select a sorting algorithm
+2. **Step Generation**: The selected algorithm processes the array and generates a sequence of steps
+3. **Visualization**: Each step is visualized with appropriate animations and color coding
+4. **Education**: The UI provides information about the algorithm and tracking of operations
+
+## 🚀 Future Enhancements
+
+- **More Sorting Algorithms**
+
+  - Quick Sort
+  - Merge Sort
+  - Heap Sort
+  - Insertion Sort
+
+- **Advanced Visualization Options**
+
+  - Split-screen algorithm comparisons
+  - Performance metrics visualization
+  - Custom array generation (random, nearly sorted, reversed)
+
+- **Educational Features**
+
+  - Code view alongside visualization
+  - Line-by-line explanation of the algorithm
+  - Interactive tutorials
+
+- **User Experience**
+  - Save and share visualizations
+  - User accounts to track progress
+  - Dark mode support
+
+## 🏁 Getting Started
+
+### Prerequisites
+
+- Node.js 16+
+- npm or yarn
+
+### Installation
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/mkhuzaima/sortify.git
+   cd sortify
+   ```
+
+2. Install dependencies:
+
+   ```bash
+   npm install
+   # or
+   yarn
+   ```
+
+3. Start the development server:
+
+   ```bash
+   npm run dev
+   # or
+   yarn dev
+   ```
+
+4. Open your browser and navigate to `http://localhost:5173`
+
+## 💻 Development
+
+The application is built with a focus on educational value and visual clarity. Each sorting algorithm implementation includes detailed step tracking to create a comprehensive visualization.
+
+## 📝 Note
+
+**This entire project, including all code, configurations, documentation, commits, and commit messages, was developed using GitHub Copilot Agent mode. Not a single line of code was manually written by the developer. The project was built to explore the capabilities and power of GitHub Copilot, specifically in Agent mode. This demonstrates how AI tools like GitHub Copilot can significantly accelerate and enhance the development process even for educational tools that require complex visualizations and algorithm implementations.**
 
 ## 📄 License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
 
-## 🙏 Acknowledgements
+## 👨‍💻 Author
 
-- Sorting algorithms educational resources
-- React and Remotion documentation
-- The open-source community for inspiration
+[mkhuzaima](https://github.com/mkhuzaima)
