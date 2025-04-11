@@ -110,16 +110,12 @@ sortify/
 
    ```bash
    npm install
-   # or
-   yarn
    ```
 
 3. Start the development server:
 
    ```bash
    npm run dev
-   # or
-   yarn dev
    ```
 
 4. Open your browser and navigate to `http://localhost:5173`
@@ -130,7 +126,7 @@ The application is built with a focus on educational value and visual clarity. E
 
 ## 📝 Note
 
-**This entire project, including all code, configurations, documentation, commits, and commit messages, was developed using GitHub Copilot Agent mode. Not a single line of code was manually written by the developer. The project was built to explore the capabilities and power of GitHub Copilot, specifically in Agent mode. This demonstrates how AI tools like GitHub Copilot can significantly accelerate and enhance the development process even for educational tools that require complex visualizations and algorithm implementations.**
+**This entire project, including all code, configurations, documentation, commits, and commit messages, was developed using GitHub Copilot Agent mode via `prd.md` file. Not a single line of code was manually written by the developer. The project was built to explore the capabilities and power of GitHub Copilot, specifically in Agent mode. This demonstrates how AI tools like GitHub Copilot can significantly accelerate and enhance the development process even for educational tools that require complex visualizations and algorithm implementations.**
 
 ## 📄 License
 
