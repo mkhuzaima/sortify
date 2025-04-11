@@ -50,7 +50,7 @@ const ArrayVisualization = ({
     if (!isSwapping) return {};
     
     return {
-      animation: 'swap-animation 0.5s ease-in-out',
+      animation: 'swap-animation 0.8s ease-in-out', // Slowed down from 0.5s to 0.8s
       animationIterationCount: '1'
     };
   };
@@ -68,26 +68,8 @@ const ArrayVisualization = ({
         `}
       </style>
       
-      {/* Loop Variable Indicators */}
-      {typeof loopVariables.i === 'number' && (
-        <div 
-          className="absolute top-0 text-purple-700 font-bold flex flex-col items-center transform -translate-y-1/2"
-          style={{ left: `${(loopVariables.i / (array.length - 1)) * 100}%` }}
-        >
-          <span className="bg-purple-100 px-2 py-1 rounded-md mb-1 border border-purple-300">i = {loopVariables.i}</span>
-          <div className="w-0 h-0 border-l-8 border-r-8 border-t-8 border-transparent border-t-purple-700"></div>
-        </div>
-      )}
-      
-      {typeof loopVariables.j === 'number' && (
-        <div 
-          className="absolute top-0 text-indigo-700 font-bold flex flex-col items-center transform -translate-y-1/2"
-          style={{ left: `${(loopVariables.j / (array.length - 1)) * 100}%` }}
-        >
-          <span className="bg-indigo-100 px-2 py-1 rounded-md mb-1 border border-indigo-300">j = {loopVariables.j}</span>
-          <div className="w-0 h-0 border-l-8 border-r-8 border-t-8 border-transparent border-t-indigo-700"></div>
-        </div>
-      )}
+      {/* Loop Variable Indicators - Now conditionally hidden */}
+      {/* Removed loop variable indicators as requested */}
       
       {/* Bar Visualization */}
       <div className="flex items-end justify-center space-x-3 h-64 w-full">
@@ -110,18 +92,18 @@ const ArrayVisualization = ({
                 ...getSwapAnimationStyle(isSwapping)
               }}
             >
-              {/* Animated Bar with border */}
+              {/* Animated Bar */}
               <div
-                className={`relative w-full ${barColorClasses} transition-all duration-300 ease-in-out 
-                  rounded-t-md shadow-md border-2 border-b-0
+                className={`relative w-full ${barColorClasses.replace('border-', '')} transition-all duration-300 ease-in-out 
+                  rounded-t-md shadow-md
                   ${isComparing ? 'ring-2 ring-yellow-300 ring-offset-2' : ''}`}
                 style={{ 
                   height,
                 }}
               />
               
-              {/* Value box below bar with matching border */}
-              <div className={`w-full py-2 px-1 text-center font-medium text-lg border-2 ${barColorClasses.replace('bg-', 'text-').replace('-100', '-700')} rounded-b-md`}>
+              {/* Value box below bar - FIXED THE DOUBLE BORDER by moving the border to this element only */}
+              <div className={`w-full py-2 px-1 text-center font-medium text-lg border-2 ${barColorClasses} rounded-md`}>
                 {value}
               </div>
               
