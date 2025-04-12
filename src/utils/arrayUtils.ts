@@ -10,7 +10,11 @@ export const parseArrayInput = (input: string): number[] | null => {
   if (!trimmedInput) return null;
   
   // Split by comma and parse each item as a number
-  const items = trimmedInput.split(',').map(item => item.trim());
+  const items = trimmedInput.split(',')
+    .map(item => item.trim())
+    .filter(item => item !== ''); // Filter out empty items
+  
+  // Parse each item as a number
   const numbers = items.map(item => parseInt(item, 10));
   
   // Check if all items are valid numbers
@@ -27,8 +31,8 @@ export const parseArrayInput = (input: string): number[] | null => {
  * @param array Array of numbers to validate
  * @returns True if the array is valid, false otherwise
  */
-export const validateArray = (array: number[] | null): boolean => {
-  if (array === null || array.length <= 1) {
+export const validateArray = (array: number[] | null | undefined): boolean => {
+  if (array === null || array === undefined || array.length <= 1) {
     return false;
   }
   
@@ -43,6 +47,9 @@ export const validateArray = (array: number[] | null): boolean => {
  * @returns The maximum value in the array
  */
 export const getMaxValue = (array: number[]): number => {
+  if (array.length === 0) {
+    return 0; // Return 0 for empty arrays instead of -Infinity
+  }
   return Math.max(...array);
 };
 
@@ -53,5 +60,8 @@ export const getMaxValue = (array: number[]): number => {
  * @returns The minimum value in the array
  */
 export const getMinValue = (array: number[]): number => {
+  if (array.length === 0) {
+    return 0;
+  }
   return Math.min(...array);
 };
